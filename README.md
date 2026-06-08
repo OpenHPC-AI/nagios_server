@@ -101,6 +101,8 @@ Create:
 cd ./portable
 #Verify Once all the environment variable is listed from .env
 vi docker-compose.yml
+
+#Update the .env file according to your environment
 vi .env
 ```
 
