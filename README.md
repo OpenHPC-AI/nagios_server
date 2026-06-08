@@ -61,6 +61,15 @@ cd nagios-rocky9.6
 Build image:
 
 ```bash
+# Pull the rocky9.6 base image in your env
+wget --user='<username>' --password='<enterprise_version_you_have_to_ask>' https://hpcsangrah-test.pune.cdac.in/vault/OpenCHAI/hpcsuite_registry/container_img_reg/rocky9.6/rockylinux_reg/rockylinux_9.6 --no-check-certificate
+# Alternate you can build rockylinux9.6 using this link
+https://github.com/OpenHPC-AI/rocky-linux-container-base-image-el9
+
+#Once the image is pulled, load in your env
+docker load < rockylinux_9.6
+
+#Build the docker images
 docker build -t cdac_nagios/rocky9.6:4.4.14 --network host .
 ```
 
