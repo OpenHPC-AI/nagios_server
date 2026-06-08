@@ -1,0 +1,62 @@
+#!/bin/bash
+#
+# httpd     Startup script for the Apache HTTP Server
+#
+# chkconfig: - 85 15
+# description: The Apache HTTP Server is an efficient and extensible \
+#  web server.
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Path to the httpd binary.
+HTTPD=/usr/sbin/httpd
+PIDFILE=/var/run/httpd/httpd.pid
+LOCKFILE=/var/lock/subsys/httpd
+
+# Define the function to start httpd
+start() {
+    echo -n "Starting httpd: "
+    daemon --pidfile=$PIDFILE $HTTPD
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $LOCKFILE
+    return $retval
+}
+
+# Define the function to stop httpd
+stop() {
+    echo -n "Stopping httpd: "
+    killproc -p $PIDFILE $HTTPD
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $LOCKFILE
+    return $retval
+}
+
+# Define the function to restart httpd
+restart() {
+    stop
+    start
+}
+
+# Check for the httpd binary
+[ -x $HTTPD ] || exit 0
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart|reload)
+        restart
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 2
+esac
+
+exit $?
