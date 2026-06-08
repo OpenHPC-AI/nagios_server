@@ -1,0 +1,47 @@
+
+services:
+  nagios:
+    image: cdac_nagios/rocky9.6:4.4.14
+    container_name: nagios_server
+
+    environment:
+      PORT: ${PORT}
+      ROOT_PASSWD: ${ROOT_PASSWD}
+      NAGIOS_USER: ${NAGIOS_USER}
+      NAGIOS_USER_PASSWD: ${NAGIOS_USER_PASSWD}
+
+      Master_IP: ${Master_IP}
+      Host_IP: ${Host_IP}
+
+      compute_g_name: ${compute_g_name}
+      hm_g_name: ${hm_g_name}
+      gpu_g_name: ${gpu_g_name}
+      master_g_name: ${master_g_name}
+      login_g_name: ${login_g_name}
+      management_g_name: ${management_g_name}
+
+    volumes:
+      - /hpctool_stack/nagios/nagiosdata:/nagiosdata
+      - /hpctool_stack/nagios/conf:/etc/nagios/conf.d
+      - /hpctool_stack/nagios/state:/var/lib/nagios
+
+    network_mode: host
+
+    restart: unless-stopped
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pidof httpd >/dev/null && pidof nagios >/dev/null && pidof nrpe >/dev/null"
+        ]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
