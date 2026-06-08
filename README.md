@@ -355,7 +355,8 @@ supervisorctl status
 Check Apache:
 
 ```bash
-curl http://localhost/nagios
+# Assign in .env file
+curl http://localhost:<port>/nagios
 ```
 
 Check running processes:
