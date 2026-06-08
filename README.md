@@ -125,18 +125,20 @@ docker ps
 Using Host Networking:
 
 ```text
-http://<server-ip>/nagios
+#Assigned port in .env file
+http://<server-ip>:<port>/nagios
 ```
 
 Example:
 
 ```text
-http://192.168.1.10/nagios
+http://192.168.1.10:10010/nagios
 ```
 
 Login:
 
 ```text
+#Assigned in .env file
 Username : nagiosadmin
 Password : <configured password>
 ```
@@ -190,12 +192,6 @@ The script automatically:
 
 ---
 
-# Validate Configuration
-
-```bash
-nagios -v /etc/nagios/nagios.cfg
-```
-
 Expected:
 
 ```text
@@ -208,12 +204,6 @@ Things look okay - No serious problems were detected
 
 ```bash
 supervisorctl restart nagios
-```
-
-or
-
-```bash
-/etc/init.d/nagios restart
 ```
 
 ---
