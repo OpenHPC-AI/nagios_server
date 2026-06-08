@@ -27,6 +27,22 @@ The solution is designed for monitoring:
 ---
 
 # Architecture
+```mermaid
+graph TD
+
+    A[Supervisord]
+
+    A --> B[Apache HTTPD]
+    A --> C[Nagios Core]
+    A --> D[NRPE]
+
+    C --> E[Master Nodes]
+    C --> F[Management Nodes]
+    C --> G[Login Nodes]
+    C --> H[Compute Nodes]
+    C --> I[GPU Nodes]
+    C --> J[High Memory Nodes]
+```
 
 +--------------------------------------------------------------------------------+
 |                           Nagios Monitoring Container                          |
