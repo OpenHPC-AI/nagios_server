@@ -61,9 +61,7 @@ cd nagios-rocky9.6
 Build image:
 
 ```bash
-docker build \
-    -t cdac_nagios/rocky9.6:latest \
-    .
+docker build -t cdac_nagios/rocky9.6:4.4.14 --network host .
 ```
 
 Verify:
@@ -76,7 +74,7 @@ Expected:
 
 ```text
 REPOSITORY              TAG       IMAGE ID
-cdac_nagios/rocky9.6    latest    xxxxxxxxxxxx
+cdac_nagios/rocky9.6    4.4.14    xxxxxxxxxxxx
 ```
 
 ---
@@ -100,63 +98,16 @@ mkdir -p /hpctool_stack/nagios/log
 Create:
 
 ```bash
+cd ./portable
+#Verify Once all the environment variable is listed from .env
 vi docker-compose.yml
-```
-
-```yaml
-version: "3.8"
-
-services:
-
-  nagios:
-
-    image: cdac_nagios/rocky9.6:latest
-
-    container_name: nagios
-
-    network_mode: host
-
-    restart: unless-stopped
-
-    environment:
-
-      PORT: 8080
-
-      ROOT_PASSWD: root123
-
-      NAGIOS_USER: nagiosadmin
-
-      NAGIOS_USER_PASSWD: nagios123
-
-      Master_IP: 192.168.1.10
-
-      Host_IP: 192.168.1.10
-
-      compute_g_name: compute
-
-      hm_g_name: hm
-
-      gpu_g_name: gpu
-
-      master_g_name: master
-
-      login_g_name: login
-
-      management_g_name: mgmt
-
-    volumes:
-
-      - /hpctool_stack/nagios/nagiosdata:/nagiosdata
-
-      - /hpctool_stack/nagios/log:/var/log/nagios
-
-      - /hpctool_stack/nagios/conf:/etc/nagios/conf.d
+vi .env
 ```
 
 Start container:
 
 ```bash
-docker compose up -d
+bash run.sh
 ```
 
 Verify:
